@@ -8,6 +8,8 @@ page_url = "https://en.wikipedia.org/wiki/2019_in_spaceflight#Orbital_launches"
 date_time_str = 'Dec 31 2019'
 numdays=365
 query_strings = {"Operational","En route","Successful"}
+time_zone = "UTC"
+tz = pytz.timezone(time_zone)
 
 #creating dates dictionary with all the dates from 2019
 date_dict = {}
@@ -77,4 +79,5 @@ with open('output.csv', mode='w') as op:
     op_writer = csv.writer(op)
     op_writer.writerow(["date","value"])
     for d in date_list:
-        op_writer.writerow([d.isoformat(),date_dict[d]])
+        localized_date = tz.localize(d)
+        op_writer.writerow([localized_date.isoformat(),date_dict[d]])
